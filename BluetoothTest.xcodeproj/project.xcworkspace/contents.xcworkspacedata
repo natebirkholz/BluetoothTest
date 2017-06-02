@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:BlutetoothTest.xcodeproj">
+      location = "self:/Users/Nate/Documents/XCodeProjects/BlutetoothTest/BluetoothTest.xcodeproj">
    </FileRef>
 </Workspace>

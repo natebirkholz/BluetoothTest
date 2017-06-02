@@ -12,16 +12,18 @@
 		433266CB1EDF6CA1002641B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 433266C91EDF6CA1002641B2 /* Main.storyboard */; };
 		433266CD1EDF6CA1002641B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 433266CC1EDF6CA1002641B2 /* Assets.xcassets */; };
 		433266D01EDF6CA1002641B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 433266CE1EDF6CA1002641B2 /* LaunchScreen.storyboard */; };
+		43DBAEBF1EE20788007307AD /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43DBAEBE1EE20788007307AD /* CoreBluetooth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		433266C21EDF6CA1002641B2 /* BlutetoothTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlutetoothTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		433266C21EDF6CA1002641B2 /* BluetoothTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BluetoothTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		433266C51EDF6CA1002641B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		433266C71EDF6CA1002641B2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		433266CA1EDF6CA1002641B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		433266CC1EDF6CA1002641B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		433266CF1EDF6CA1002641B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		433266D11EDF6CA1002641B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		43DBAEBE1EE20788007307AD /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43DBAEBF1EE20788007307AD /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,13 +43,14 @@
 			children = (
 				433266C41EDF6CA1002641B2 /* BlutetoothTest */,
 				433266C31EDF6CA1002641B2 /* Products */,
+				43DBAEBD1EE20788007307AD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		433266C31EDF6CA1002641B2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				433266C21EDF6CA1002641B2 /* BlutetoothTest.app */,
+				433266C21EDF6CA1002641B2 /* BluetoothTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -64,12 +68,20 @@
 			path = BlutetoothTest;
 			sourceTree = "<group>";
 		};
+		43DBAEBD1EE20788007307AD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				43DBAEBE1EE20788007307AD /* CoreBluetooth.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		433266C11EDF6CA1002641B2 /* BlutetoothTest */ = {
+		433266C11EDF6CA1002641B2 /* BluetoothTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 433266D41EDF6CA1002641B2 /* Build configuration list for PBXNativeTarget "BlutetoothTest" */;
+			buildConfigurationList = 433266D41EDF6CA1002641B2 /* Build configuration list for PBXNativeTarget "BluetoothTest" */;
 			buildPhases = (
 				433266BE1EDF6CA1002641B2 /* Sources */,
 				433266BF1EDF6CA1002641B2 /* Frameworks */,
@@ -79,9 +91,9 @@
 			);
 			dependencies = (
 			);
-			name = BlutetoothTest;
+			name = BluetoothTest;
 			productName = BlutetoothTest;
-			productReference = 433266C21EDF6CA1002641B2 /* BlutetoothTest.app */;
+			productReference = 433266C21EDF6CA1002641B2 /* BluetoothTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -98,10 +110,15 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 65PRBW7K5C;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
-			buildConfigurationList = 433266BD1EDF6CA1002641B2 /* Build configuration list for PBXProject "BlutetoothTest" */;
+			buildConfigurationList = 433266BD1EDF6CA1002641B2 /* Build configuration list for PBXProject "BluetoothTest" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -114,7 +131,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				433266C11EDF6CA1002641B2 /* BlutetoothTest */,
+				433266C11EDF6CA1002641B2 /* BluetoothTest */,
 			);
 		};
 /* End PBXProject section */
@@ -266,7 +283,7 @@
 				DEVELOPMENT_TEAM = 65PRBW7K5C;
 				INFOPLIST_FILE = BlutetoothTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.natebirkholz.BlutetoothTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.natebirkholz.BluetoothTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -279,7 +296,7 @@
 				DEVELOPMENT_TEAM = 65PRBW7K5C;
 				INFOPLIST_FILE = BlutetoothTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.natebirkholz.BlutetoothTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.natebirkholz.BluetoothTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -288,7 +305,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		433266BD1EDF6CA1002641B2 /* Build configuration list for PBXProject "BlutetoothTest" */ = {
+		433266BD1EDF6CA1002641B2 /* Build configuration list for PBXProject "BluetoothTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				433266D21EDF6CA1002641B2 /* Debug */,
@@ -297,13 +314,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		433266D41EDF6CA1002641B2 /* Build configuration list for PBXNativeTarget "BlutetoothTest" */ = {
+		433266D41EDF6CA1002641B2 /* Build configuration list for PBXNativeTarget "BluetoothTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				433266D51EDF6CA1002641B2 /* Debug */,
 				433266D61EDF6CA1002641B2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
