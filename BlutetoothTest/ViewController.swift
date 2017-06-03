@@ -55,57 +55,29 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         print(peripheral.name as Any)
         print(advertisementData[CBAdvertisementDataServiceUUIDsKey] as! Array<CBUUID>)
-        peripheralController = peripheral
+        self.peripheralController = peripheral
 
-        centralManager.connect(peripheral, options: nil)
-//        centralManager.stopScan()
-
+        self.centralManager.connect(peripheral, options: nil)
     }
 
 
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-//        print(characteristic)
-//        print("in didUpdateValueFor")
 
         if characteristic.uuid.uuidString == timeUUID.uuidString {
             if let valueFrom = characteristic.value  {
                 if let this = String(data: valueFrom, encoding: .utf8) {
-//                    print("time: ", this)
                     if UIApplication.shared.applicationState == .active {
                         label.text = this
                         print("ACTIVE \(this)")
-                    }
-
-//                    if UIApplication.shared.applicationState == .background {
-//                        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
-//                        let content = UNMutableNotificationContent()
-//                        content.title = "Now"
-//                        content.body = "\(this)"
-//                        content.sound = UNNotificationSound.default()
-//                        let notification = UNNotificationRequest(identifier: "ttt", content: content, trigger: nil)
-//
-//                        UNUserNotificationCenter.current().add(notification) {
-//                            error in
-//                            if let error = error {
-//                                print("Problem adding notification: \(error.localizedDescription)")
-//                            }
-//                            else {
-//                            }
-//                        }
-//                    }
-
-                    if UIApplication.shared.applicationState == .background {
+                    } else if UIApplication.shared.applicationState == .background {
                         print("BACKGROUND \(this)")
-                    }
-
-                    if UIApplication.shared.applicationState == .inactive {
+                    } else if UIApplication.shared.applicationState == .inactive {
                         print("INACTIVE \(this)")
                     }
                 }
             }
         }
-        
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?) {
@@ -136,4 +108,22 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
     }
 }
+
+//                    if UIApplication.shared.applicationState == .background {
+//                        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
+//                        let content = UNMutableNotificationContent()
+//                        content.title = "Now"
+//                        content.body = "\(this)"
+//                        content.sound = UNNotificationSound.default()
+//                        let notification = UNNotificationRequest(identifier: "ttt", content: content, trigger: nil)
+//
+//                        UNUserNotificationCenter.current().add(notification) {
+//                            error in
+//                            if let error = error {
+//                                print("Problem adding notification: \(error.localizedDescription)")
+//                            }
+//                            else {
+//                            }
+//                        }
+//                    }
 
