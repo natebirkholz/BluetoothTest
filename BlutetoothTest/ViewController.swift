@@ -108,21 +108,3 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     }
 }
 
-//                    if UIApplication.shared.applicationState == .background {
-//                        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
-//                        let content = UNMutableNotificationContent()
-//                        content.title = "Now"
-//                        content.body = "\(this)"
-//                        content.sound = UNNotificationSound.default()
-//                        let notification = UNNotificationRequest(identifier: "ttt", content: content, trigger: nil)
-//
-//                        UNUserNotificationCenter.current().add(notification) {
-//                            error in
-//                            if let error = error {
-//                                print("Problem adding notification: \(error.localizedDescription)")
-//                            }
-//                            else {
-//                            }
-//                        }
-//                    }
-
