@@ -90,7 +90,6 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
 
         if service.uuid.uuidString == timeUUID.uuidString {
             peripheralController.setNotifyValue(true, for: service.characteristics!.first!)
-            peripheralController.readValue(for: service.characteristics!.first!)
         }
     }
 
