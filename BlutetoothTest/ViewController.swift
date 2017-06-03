@@ -14,11 +14,8 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
 
     var label: UILabel!
     var centralManager: CBCentralManager!
-
     var peripheralController: CBPeripheral!
-
     let timeUUID = CBUUID(string: "D701F42C-49E1-48E9-B6E2-3862FEB2F550")
-
     var central : CBCentral!
 
     override func viewDidLoad() {
@@ -31,72 +28,48 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
 
         let manager = CBCentralManager(delegate: self, queue: nil, options: nil)
         centralManager = manager
-
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         print(central.state.rawValue)
         centralManager.scanForPeripherals(withServices: [timeUUID], options: nil)
-        print("scanning")
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         peripheral.delegate = self
         peripheral.discoverServices(nil)
-
-        print("connected")
     }
 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        print(peripheral.name as Any)
-        print(advertisementData[CBAdvertisementDataServiceUUIDsKey] as! Array<CBUUID>)
-        self.peripheralController = peripheral
-
-        self.centralManager.connect(peripheral, options: nil)
+        peripheralController = peripheral
+        centralManager.connect(peripheral, options: nil)
     }
 
-
-
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-
         if characteristic.uuid.uuidString == timeUUID.uuidString {
             if let valueFrom = characteristic.value  {
-                if let this = String(data: valueFrom, encoding: .utf8) {
+                if let timeStamp = String(data: valueFrom, encoding: .utf8) {
                     if UIApplication.shared.applicationState == .active {
-                        label.text = this
-                        print("ACTIVE \(this)")
+                        label.text = timeStamp
+                        print("ACTIVE \(timeStamp)")
                     } else if UIApplication.shared.applicationState == .background {
-                        print("BACKGROUND \(this)")
+                        print("BACKGROUND \(timeStamp)")
                     } else if UIApplication.shared.applicationState == .inactive {
-                        print("INACTIVE \(this)")
+                        print("INACTIVE \(timeStamp)")
                     }
                 }
             }
         }
     }
 
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?) {
-        if let descriptors = characteristic.descriptors {
-            print("descriptors: ", descriptors)
-        }
-    }
-
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-
         if service.uuid.uuidString == timeUUID.uuidString {
             peripheralController.setNotifyValue(true, for: service.characteristics!.first!)
         }
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        print("services: ", peripheral.services as Any)
         for service in peripheral.services! {
-            print(service.uuid)
             peripheral.discoverCharacteristics(nil, for: service)
         }
     }
