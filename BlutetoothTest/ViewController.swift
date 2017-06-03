@@ -16,7 +16,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     var timestampLegendLabel: UILabel!
     var subscriptionLabel: UILabel!
     var centralManager: CBCentralManager!
-    var peripheralController: CBPeripheral!
+    var remotePeripheral: CBPeripheral!
     let timeUUID = CBUUID(string: "D701F42C-49E1-48E9-B6E2-3862FEB2F550")
     var central : CBCentral!
 
@@ -56,7 +56,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     }
 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        peripheralController = peripheral
+        remotePeripheral = peripheral
         centralManager.connect(peripheral, options: nil)
     }
 
@@ -79,7 +79,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if service.uuid.uuidString == timeUUID.uuidString {
-            peripheralController.setNotifyValue(true, for: service.characteristics!.first!)
+            remotePeripheral.setNotifyValue(true, for: service.characteristics!.first!)
             subscriptionLabel.text = "Subscribed!"
             subscriptionLabel.backgroundColor = UIColor.green.withAlphaComponent(0.33)
         }
