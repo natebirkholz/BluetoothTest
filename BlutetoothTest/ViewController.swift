@@ -17,7 +17,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     var subscriptionLabel: UILabel!
     var centralManager: CBCentralManager!
     var remotePeripheral: CBPeripheral!
-    let timeUUID = CBUUID(string: "D701F42C-49E1-48E9-B6E2-3862FEB2F550")
+    let streamServiceUuid = CBUUID(string: "D701F42C-49E1-48E9-B6E2-3862FEB2F550")
     var central : CBCentral!
 
     override func viewDidLoad() {
@@ -47,7 +47,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
 
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         print(central.state.rawValue)
-        centralManager.scanForPeripherals(withServices: [timeUUID], options: nil)
+        centralManager.scanForPeripherals(withServices: [streamServiceUuid], options: nil)
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
@@ -61,7 +61,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     }
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        if characteristic.uuid.uuidString == timeUUID.uuidString {
+        if characteristic.uuid == streamServiceUuid {
             if let valueFrom = characteristic.value  {
                 if let timeStamp = String(data: valueFrom, encoding: .utf8) {
                     if UIApplication.shared.applicationState == .active {
@@ -78,7 +78,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        if service.uuid.uuidString == timeUUID.uuidString {
+        if service.uuid == streamServiceUuid {
             remotePeripheral.setNotifyValue(true, for: service.characteristics!.first!)
             subscriptionLabel.text = "Subscribed!"
             subscriptionLabel.backgroundColor = UIColor.green.withAlphaComponent(0.33)
