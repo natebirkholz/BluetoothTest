@@ -18,6 +18,11 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     var centralManager: CBCentralManager!
     var remotePeripheral: CBPeripheral!
     let streamServiceUuid = CBUUID(string: "D701F42C-49E1-48E9-B6E2-3862FEB2F550")
+    let announceServiceUuid = CBUUID(string: "5D191DA6-2F35-4CEB-AC41-993307328DD4")
+    let dataServiceUuid = CBUUID(string: "B9E7620E-76A7-4A2A-BFB5-C2CD34072743")
+
+    var readCharactistic: CBCharacteristic?
+
     var central : CBCentral!
 
     override func viewDidLoad() {
@@ -47,7 +52,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
 
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         print(central.state.rawValue)
-        centralManager.scanForPeripherals(withServices: [streamServiceUuid], options: nil)
+        centralManager.scanForPeripherals(withServices: [streamServiceUuid, announceServiceUuid], options: nil)
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
@@ -74,6 +79,19 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
                     }
                 }
             }
+        } else if characteristic.uuid == announceServiceUuid {
+            if let valueFrom = characteristic.value, let timeStamp = String(data: valueFrom, encoding: .utf8) {
+                    print("announced \(timeStamp)")
+                    peripheral.readValue(for: readCharactistic!)
+                }
+
+        } else if characteristic.uuid == dataServiceUuid {
+            print("characeteristic data: ", characteristic.value as Any)
+            if let dataFrom = characteristic.value, let dictionary = NSKeyedUnarchiver.unarchiveObject(with: dataFrom) {
+                print("found \(dictionary)")
+            }
+        } else {
+            print(characteristic.value?.count)
         }
     }
 
@@ -82,6 +100,15 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             remotePeripheral.setNotifyValue(true, for: service.characteristics!.first!)
             subscriptionLabel.text = "Subscribed!"
             subscriptionLabel.backgroundColor = UIColor.green.withAlphaComponent(0.33)
+        }
+
+        if service.uuid == announceServiceUuid {
+            remotePeripheral.setNotifyValue(true, for: service.characteristics!.first!)
+        }
+
+        if service.uuid == dataServiceUuid {
+            readCharactistic = service.characteristics!.first
+            print("READ CHARACTERISTIC")
         }
     }
 
