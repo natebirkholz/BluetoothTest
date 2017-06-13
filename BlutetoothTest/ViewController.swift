@@ -65,16 +65,14 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if characteristic.uuid == streamServiceUuid {
-            if let valueFrom = characteristic.value  {
-                if let timeStamp = String(data: valueFrom, encoding: .utf8) {
-                    if UIApplication.shared.applicationState == .active {
-                        timestampLabel?.text = timeStamp
-                        print("ACTIVE \(timeStamp)")
-                    } else if UIApplication.shared.applicationState == .background {
-                        print("BACKGROUND \(timeStamp)")
-                    } else if UIApplication.shared.applicationState == .inactive {
-                        print("INACTIVE \(timeStamp)")
-                    }
+            if let value = characteristic.value, let timeStamp = String(data: value, encoding: .utf8) {
+                if UIApplication.shared.applicationState == .active {
+                    timestampLabel?.text = timeStamp
+                    print("ACTIVE \(timeStamp)")
+                } else if UIApplication.shared.applicationState == .background {
+                    print("BACKGROUND \(timeStamp)")
+                } else if UIApplication.shared.applicationState == .inactive {
+                    print("INACTIVE \(timeStamp)")
                 }
             }
         }
