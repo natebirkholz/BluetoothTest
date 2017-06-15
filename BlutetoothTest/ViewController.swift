@@ -19,6 +19,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     var remotePeripheral: CBPeripheral?
     let streamServiceUuid = CBUUID(string: "D701F42C-49E1-48E9-B6E2-3862FEB2F550")
     var central : CBCentral?
+    var peripherals = [CBPeripheral]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,13 +55,22 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        peripherals.append(peripheral)
         peripheral.delegate = self
         peripheral.discoverServices(nil)
+        central.stopScan()
     }
 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         remotePeripheral = peripheral
         centralManager?.connect(peripheral, options: nil)
+    }
+
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        if let index = peripherals.index(of: peripheral) {
+            peripherals.remove(at: index)
+            print("disconnected peripheral: ", peripheral.name as Any)
+        }
     }
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
@@ -99,6 +109,8 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     func peripheral(_ peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService]) {
         if invalidatedServices.count > 0 {
             print("invalidated: ", invalidatedServices)
+            centralManager?.cancelPeripheralConnection(peripheral)
+            centralManager?.scanForPeripherals(withServices: [streamServiceUuid], options: nil)
         }
     }
 }
